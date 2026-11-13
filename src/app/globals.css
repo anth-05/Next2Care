@@ -1,0 +1,17 @@
+/* Next2Care brand tokens — same as the prototype (prototype/next2care-planning.html) */
+:root {
+  --brand: #0f1322; --brand-ink: #ffffff; --brand-muted: #aab0c4; --brand-line: rgba(255, 255, 255, 0.18);
+  --bg: #f3f4f8; --surface: #ffffff; --ink: #0f1322; --muted: #596075; --line: #dcdfe8;
+  --accent: #17798a; --accent-soft: #e0eff2; --good: #1d7a3e; --bad: #b3261e;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --brand: #0a0d18; --bg: #0f1322; --surface: #171c2e; --ink: #e9ebf3; --muted: #9ba2b7; --line: #272d44;
+    --accent: #5cc3d3; --accent-soft: #15303a; --good: #6fd194; --bad: #ff8a80;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.5 "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif; }
+.mono { font-family: "IBM Plex Mono", ui-monospace, monospace; }

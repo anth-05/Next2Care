@@ -1,0 +1,22 @@
+const { boot } = require("./harness");
+const { seed } = require("./seed");
+let ok = 0, all = 0; const c = (n, v, i="") => { all++; if (v) ok++; console.log(`${v?"PASS":"FAIL"}  ${n}${i?"  — "+i:""}`); };
+(async () => {
+  const A = await boot(seed(), { persona: "inst:i-linde" }); await A.tab("uren");
+  await A.click('[data-act="returnHours"][data-id="s02"]');
+  c("X1 planner sends wrong hours back", A.shifts().s02.hours === null && A.notifs().some(n => n.to === "zzp:z-sanne" && n.text.includes("opnieuw")));
+  await A.tab("rooster"); await A.click('[data-act="week"][data-d="7"]');
+  await A.click('[data-act="edit"][data-id="s07"]');
+  A.set("m-end", "06:00");
+  c("X2 live duration warns while typing", A.$("#m-dur").textContent.includes("langer dan 12 uur"), A.$("#m-dur").textContent);
+  A.set("m-start", "23:00"); A.set("m-end", "07:00");
+  c("X3 night shift shows 'eindigt de volgende dag'", A.$("#m-dur").textContent.includes("volgende dag"), A.$("#m-dur").textContent);
+  A.set("m-date", "2026-11-02"); await A.submit('form[data-form="shift"]');
+  c("X4 moving a shift into the past is refused", A.shifts().s07.date === "2026-11-16", A.toast());
+  if (!A.$('form[data-form="shift"]')) await A.click('[data-act="edit"][data-id="s07"]');
+  await A.click('[data-act="askCancel"]'); A.set("m-reason", "Bezetting is rond"); await A.click('[data-act="doCancel"]'); await A.tick(40);
+  c("X5 cancel reason reaches the zzp'er", A.shifts().s07.status === "geannuleerd" && A.notifs().some(n => n.to === "zzp:z-lotte" && n.text.includes("Bezetting is rond")));
+  c("X6 actor gets no notification about own action", !A.notifs().some(n => n.to === "inst:i-linde"));
+  c("X7 brand wordmark + footer present", A.d.body.textContent.includes("NEXT2CARE") && A.text().includes("KvK 94831912"));
+  console.log(`${ok}/${all} passed`);
+})();
