@@ -1,0 +1,12 @@
+# Render Blueprint: the client demo as a static site.
+# Render runs the build on every push and serves prototype/site/.
+services:
+  - type: web
+    name: next2care-demo
+    runtime: static
+    buildCommand: node prototype/build-demo.js
+    staticPublishPath: prototype/site
+    headers:
+      - path: /*
+        name: X-Robots-Tag
+        value: noindex, nofollow

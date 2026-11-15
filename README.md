@@ -49,6 +49,14 @@ npm run dev                  # http://localhost:3000
 
 Geen patiëntgegevens in dit systeem: diensten beschrijven alleen afdeling en functie.
 
+## Klantdemo
+
+`prototype/next2care-demo.html` is een losse demoversie voor de klant: voorbeeldgegevens (datums lopen mee met vandaag), vrij wisselen tussen rollen, een rondleiding in 9 stappen en een knop "Opnieuw beginnen". Hij heeft geen login of database nodig en synchroniseert live tussen twee open vensters. De demo wordt gebouwd uit het prototype:
+
+```bash
+cd prototype && node build-demo.js   # gebruikt demo-layer.js en demo-ui.js
+```
+
 ## Prototype en tests
 
 `prototype/next2care-planning.html` is het werkende prototype (gepubliceerd op claude.ai). In `prototype/tests/` staan de automatische controles (happy flow, sad flow, inloggen):
